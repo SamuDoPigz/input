@@ -1,9 +1,43 @@
-<!DOCTYPE html>
-<html>
-<body>
+function mascara(o, f) {
+    v_obj = o
+    v_fun = f
+    setTimeout("execmascara()", 1)
+}
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+function execmascara() {
+    v_obj.value = v_fun(v_obj.value)
+}
 
-</body>
-</html>
+function mreais(v) {
+    v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
+    v = v.replace(/(\d{2})$/, ",$1") //Coloca a virgula
+    v = v.replace(/(\d+)(\d{3},\d{2})$/g, "$1.$2") //Coloca o primeiro ponto
+   
+   if(v.length >= 5){
+      var maximo = v.replace(/\./g,'').replace(',','.') > 1064;
+      var minimo = v.replace(/\./g,'').replace(',','.') < 10;
+
+      if(maximo){
+         return '1.064,00';
+      }else if(minimo){
+         return '10,00';
+      }else{
+         return v;
+      }
+   }else{
+      return v;
+   }
+}
+<div class="container">
+   <form>
+       <div class="form-group">
+           <label for="dinheiro"><b>Desejo doar em R$: </label>
+           <input name="campo1" onkeypress="mascara(this,mreais)" size="7" /><br>                    
+           <small>Conforme resolução do TSE, as doações são limitadas a R$ 1.064,10 por dia e a 10% dos rendimentos brutos em 2017 para cada pré-candidato. </small><br>
+           <button type="submit" class="btn-doar-form">Doar com Pagseguro</button>           
+          <!-- <button type="submit" class="btn-doar-form">Doar com PayPal</button> -->
+
+       </div>
+
+   </form>
+</div>
